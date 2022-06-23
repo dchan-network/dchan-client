@@ -10,7 +10,7 @@ import { Router } from "router";
 import PostComponent from "components/post/Post";
 import Loading from "components/Loading";
 import Anchor from "components/Anchor";
-import usePubSub from "hooks/usePubSub";
+import { usePubSub } from "hooks";
 import { useHistory } from "react-router-dom";
 import { useTitle } from "react-use";
 import THREAD_GET_LAST_BLOCK from "graphql/queries/thread_get_last_block";
@@ -125,7 +125,7 @@ export default function ThreadPage({ location, match: { params } }: any) {
   );
 
   return (
-    <div className="bg-primary min-h-100vh flex flex-col">
+    <div className="bg-primary min-h-100vh flex flex-col" data-theme={board?.isNsfw ? "nsfw" : "blueboard"}>
       <ContentHeader
         board={board}
         thread={thread}

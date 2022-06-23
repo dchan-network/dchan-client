@@ -18,10 +18,10 @@ export default function PopularBoardsCard({block}: {block?: number}) {
   return (
     <div>
       <BoardList className="grid" loading={loading} boards={data?.boards} block={block} />
-      <div className="p-4">
+      <div>
         [
         <Link
-          className="text-blue-600 visited:text-purple-600 hover:text-blue-500 py-1 px-4"
+          className="dchan-link py-1 px-4"
           to="/_/boards"
         >
           More boards

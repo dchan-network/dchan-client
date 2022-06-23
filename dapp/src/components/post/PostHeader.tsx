@@ -1,6 +1,6 @@
 import Menu from "components/Menu";
 import Status from "components/Status";
-import UserLabel from "components/UserLabel"
+import UserLabel from "components/UserLabel";
 import { Post, sendTip, Thread } from "dchan";
 import { fromBigInt } from "dchan/entities/datetime";
 import { isLowScore } from "dchan/entities/post";
@@ -13,40 +13,56 @@ import {
   unlockThread,
   unpinThread,
 } from "dchan/operations";
-import usePubSub from "hooks/usePubSub";
-import useSettings from "hooks/useSettings";
-import useUser from "hooks/useUser";
-import useWeb3 from "hooks/useWeb3";
-import useFavorites from "hooks/useFavorites";
+import { usePubSub, useSettings, useUser, useWeb3, useFavorites } from "hooks";
 import { DateTime } from "luxon";
 import { ReactElement, useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import { Router } from "router";
 import { useTraveledBlock } from "components/TimeTravelWidget";
 
-function DateDisplay({post}: {post: Post}) {
+function DateDisplay({ post }: { post: Post }) {
   const createdAt = fromBigInt(post.createdAtBlock.timestamp);
   const traveledBlock = useTraveledBlock();
-  const relativeTime = createdAt.toRelative({
-    base: traveledBlock ? fromBigInt(traveledBlock.timestamp) : undefined
-  });
-  const formattedDate = `${
-    createdAt.toLocaleString({ day: "2-digit", month: "2-digit", year: "2-digit" })
-    }(${createdAt.weekdayShort
-    })${createdAt.toLocaleString(DateTime.TIME_24_WITH_SECONDS)
-    }`;
-  
-  return <span className="px-0.5 whitespace-nowrap text-sm" title={relativeTime !== null ? relativeTime : undefined}>
-    {formattedDate}
-    <span className="text-xs px-1 opacity-20 hover:opacity-100 hidden sm:inline-block">[
-      <Link
-        title={`Time travel to ${formattedDate}`}
-        to={`${Router.post(post)}?block=${post.createdAtBlock.number}`}
-      >
-        {relativeTime}
-      </Link>
-    ]</span>
-  </span>
+  const relativeTime = createdAt.toRelative();
+  const base = traveledBlock ? fromBigInt(traveledBlock.timestamp) : undefined;
+  const traveledRelativeTime =
+    base && createdAt.diff(base).milliseconds
+      ? createdAt.toRelative({
+          base,
+        })
+      : "Now";
+  const formattedDate = `${createdAt.toLocaleString({
+    day: "2-digit",
+    month: "2-digit",
+    year: "2-digit",
+  })}(${createdAt.weekdayShort})${createdAt.toLocaleString(
+    DateTime.TIME_24_WITH_SECONDS
+  )}`;
+
+  return (
+    <span
+      className="px-0.5 whitespace-nowrap text-sm"
+      title={relativeTime !== null ? relativeTime : undefined}
+    >
+      {formattedDate}
+      <span className="text-xs px-1 opacity-20 hover:opacity-100 hidden sm:inline-block">
+        [
+        <Link
+          title={`Time travel to ${formattedDate}`}
+          to={`${Router.post(post)}?block=${post.createdAtBlock.number}`}
+        >
+          {traveledBlock ? (
+            <span>
+              {traveledRelativeTime} ({relativeTime})
+            </span>
+          ) : (
+            relativeTime
+          )}
+        </Link>
+        ]
+      </span>
+    </span>
+  );
 }
 
 export default function PostHeader({
@@ -129,10 +145,11 @@ export default function PostHeader({
     <span className="max-w-95vw inline-flex flex-wrap items-center relative">
       {isOp && thread ? (
         <button
-          className={`inline-block ${favorite
+          className={`inline-block ${
+            favorite
               ? "opacity-60 hover:opacity-80"
-              : "opacity-20 hover:opacity-40"}`
-          }
+              : "opacity-20 hover:opacity-40"
+          }`}
           title={favorite ? "Remove from watched" : "Add to watched"}
           onClick={onFavorite}
         >
@@ -148,14 +165,18 @@ export default function PostHeader({
       </span>
       <span className="px-1 whitespace-nowrap text-sm">
         (ID: <UserLabel user={post.from} />
-        {provider ? (
-          <button
-            className="text-blue-600 visited:text-purple-600 hover:text-blue-500 flex-grow opacity-50 hover:opacity-100"
-            title="Send MATIC tip"
-            onClick={() => onSendTip(address)}
-          >
-            💸
-          </button>
+        {provider && accounts && accounts[0] ? (
+          <Menu>
+            <div>
+              <button
+                className="dchan-link flex-grow opacity-50 hover:opacity-100"
+                title="Send MATIC tip"
+                onClick={() => onSendTip(address)}
+              >
+                💸 Send Tip
+              </button>
+            </div>
+          </Menu>
         ) : (
           ""
         )}
@@ -165,17 +186,19 @@ export default function PostHeader({
       <span className="whitespace-nowrap">
         <span className="px-0.5 on-parent-target-font-bold text-sm whitespace-nowrap">
           <Link
+            className="dchan-link"
             to={`${Router.post(post)}${block ? `?block=${block}` : ""}`}
             title="Link to this post"
           >
             No.
           </Link>
-          <button
+          <span
+            className="dchan-link"
             title="Reply to this post"
             onClick={() => replyTo(post.from.id, post.n)}
           >
             {n}
-          </button>
+          </span>
         </span>
         <span>
           {isOp && isPinned ? (
@@ -196,92 +219,110 @@ export default function PostHeader({
             <span></span>
           )}
         </span>
-          <Menu>
+        <Menu>
+          <div>
+            <a
+              href={`https://polygonscan.com/tx/${post.id}`}
+              title="TX Details"
+              target="_blank"
+              rel="noreferrer"
+            >
+              🔍 TX Details
+            </a>
+          </div>
+          <div>
+            <Link
+              to={`${Router.post(post)}?block=${post.createdAtBlock.number}`}
+            >
+              ⏱️ Time travel to
+            </Link>
+          </div>
+          {accounts && accounts[0] ? (
             <div>
-              <a href={`https://polygonscan.com/tx/${post.id}`} title="TX Details" target="_blank" rel="noreferrer">
-                🔍 TX Details
-              </a>
-            </div>
-            <div>
-              <Link to={`${Router.post(post)}?block=${post.createdAtBlock.number}`}>
-                ⏱️ Time travel to
-              </Link>
-            </div>
-            {accounts && accounts[0] ? 
-              <div>
-                {canLock ? (
-                  <div>
-                    {thread && thread.isLocked ? (
-                      <span>
-                        <input name="lock" type="hidden" value="false"></input>
-                        <button onClick={() => unlockThread(id, accounts, setStatus)}>
-                          🔓 Unlock
-                        </button>
-                      </span>
-                    ) : (
-                      <span>
-                        <input name="lock" type="hidden" value="true"></input>
-                        <button onClick={() => lockThread(id, accounts, setStatus)}>
-                          🔒 Lock
-                        </button>
-                      </span>
-                    )}
-                  </div>
-                ) : (
-                  ""
-                )}
-                {canPin ? (
-                  <div>
-                    {thread && thread.isPinned ? (
-                      <span>
-                        <input name="sticky" type="hidden" value="false"></input>
-                        <button onClick={() => unpinThread(id, accounts, setStatus)}>
-                          📌 Unpin
-                        </button>
-                      </span>
-                    ) : (
-                      <span>
-                        <input name="sticky" type="hidden" value="true"></input>
-                        <button onClick={() => pinThread(id, accounts, setStatus)}>
-                          📌 Pin
-                        </button>
-                      </span>
-                    )}
-                  </div>
-                ) : (
-                  ""
-                )}
-                {canRemove ? (
-                  <div>
-                    <button onClick={() => removePost(id, accounts, setStatus)}>
-                      ❌ Remove
-                    </button>
-                  </div>
-                ) : (
-                  ""
-                )}
-                {canBan ? (
-                  <div>
-                    <button onClick={() => banPost(id, accounts, setStatus)}>
-                      🔫 Ban
-                    </button>
-                  </div>
-                ) : (
-                  ""
-                )}
+              {canLock ? (
                 <div>
-                  <button onClick={() => reportPost(id, accounts, setStatus)}>
-                    ⚠️ Report
+                  {thread && thread.isLocked ? (
+                    <span>
+                      <input name="lock" type="hidden" value="false"></input>
+                      <button
+                        onClick={() => unlockThread(id, accounts, setStatus)}
+                      >
+                        🔓 Unlock
+                      </button>
+                    </span>
+                  ) : (
+                    <span>
+                      <input name="lock" type="hidden" value="true"></input>
+                      <button
+                        onClick={() => lockThread(id, accounts, setStatus)}
+                      >
+                        🔒 Lock
+                      </button>
+                    </span>
+                  )}
+                </div>
+              ) : (
+                ""
+              )}
+              {canPin ? (
+                <div>
+                  {thread && thread.isPinned ? (
+                    <span>
+                      <input name="sticky" type="hidden" value="false"></input>
+                      <button
+                        onClick={() => unpinThread(id, accounts, setStatus)}
+                      >
+                        📌 Unpin
+                      </button>
+                    </span>
+                  ) : (
+                    <span>
+                      <input name="sticky" type="hidden" value="true"></input>
+                      <button
+                        onClick={() => pinThread(id, accounts, setStatus)}
+                      >
+                        📌 Pin
+                      </button>
+                    </span>
+                  )}
+                </div>
+              ) : (
+                ""
+              )}
+              {canRemove ? (
+                <div>
+                  <button onClick={() => removePost(id, accounts, setStatus)}>
+                    ❌ Remove
                   </button>
                 </div>
-              </div> : ""}
-          </Menu>
+              ) : (
+                ""
+              )}
+              {canBan ? (
+                <div>
+                  <button onClick={() => banPost(id, accounts, setStatus)}>
+                    🔫 Ban
+                  </button>
+                </div>
+              ) : (
+                ""
+              )}
+              <div>
+                <button onClick={() => reportPost(id, accounts, setStatus)}>
+                  ⚠️ Report
+                </button>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+        </Menu>
       </span>
       {children}
       <span className="dchan-backlinks text-left text-sm flex flex-wrap">
         {postBacklinks?.map((post) => (
           <Link
-            className="text-blue-600 visited:text-purple-600 hover:text-blue-500 px-1"
+            className="dchan-link px-1"
             to={`${Router.post(post)}${block ? `?block=${block}` : ""}`}
             onMouseEnter={() => publish("POST_HIGHLIGHT", post.id)}
             onMouseLeave={() => publish("POST_DEHIGHLIGHT", post.id)}

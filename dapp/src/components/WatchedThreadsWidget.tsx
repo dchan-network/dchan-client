@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { useThrottleCallback } from "@react-hook/throttle";
 import { Thread } from "dchan";
 import THREADS_LIST_FAVORITES from "graphql/queries/threads/list_favorites";
-import useFavorites from "hooks/useFavorites";
+import { useFavorites } from "hooks";
 import { truncate } from "lodash";
 import { useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
@@ -31,12 +31,23 @@ export default function WatchedThreadsWidget({ block }: { block?: string }) {
   const onRemove = removeFavorite ? removeFavorite : () => { };
 
   return favorites ? (
-    <div className="text-center bg-primary border border-secondary-accent p-1">
+    <div className="bg-primary border border-secondary-accent p-1">
       {loading ? (
         <Loading />
       ) : ids.length > 0 && threads && threads.length > 0 ? (
         <div>
-          <div className="mb-2">Watched threads:</div>
+          <div className="mb-2">Watched threads: 
+            <span className="text-xs pl-2">
+              [
+              <button
+                className="dchan-link"
+                onClick={onRefresh}
+              >
+                Refresh
+              </button>
+              ]
+            </span>
+          </div>
           <div className="text-sm">
             {threads.map((thread: Thread) => {
               const board = thread.board;
@@ -52,7 +63,7 @@ export default function WatchedThreadsWidget({ block }: { block?: string }) {
                     ""
                   )}
                   <Link
-                    className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+                    className="dchan-link"
                     to={`${Router.thread(thread)}`}
                   >
                     {" "}
@@ -66,18 +77,6 @@ export default function WatchedThreadsWidget({ block }: { block?: string }) {
                 </div>
               );
             })}
-          </div>
-          <div>
-            <div className="text-xs">
-              [
-              <button
-                className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
-                onClick={onRefresh}
-              >
-                Refresh
-              </button>
-              ]
-            </div>
           </div>
         </div>
       ) : (

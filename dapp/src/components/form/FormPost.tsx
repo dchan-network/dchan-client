@@ -9,19 +9,15 @@ import {
 import { Board, shortenAddress, Thread } from "dchan";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import useWeb3 from "hooks/useWeb3";
+import { useWeb3, useEventListener, usePubSub, useUser, useFavorites } from "hooks";
 import Status from "components/Status";
-import useEventListener from "hooks/useEventListener";
 import { isString, uniqueId } from "lodash";
 import { postMessage } from "dchan/operations";
 import MaxLengthWatch from "./MaxLengthWatch";
-import usePubSub from "hooks/usePubSub";
 import Loading from "components/Loading";
 import Wallet from "components/Wallet";
-import useUser from "hooks/useUser";
 import Menu from "components/Menu";
 import useFormPersist from "hooks/useFormPersist"
-import useFavorites from "hooks/useFavorites";
 import IdLabel from "components/IdLabel";
 import FAQButton from "components/FAQCard";
 import RulesButton from "components/RulesCard";
@@ -149,6 +145,8 @@ export default function FormPost({
   }, [setNonce]);
 
   const resetForm = useCallback(() => {
+    if(!window.confirm("Reset form?")) return;
+
     reset();
     trigger();
     changeNonce();
@@ -486,7 +484,7 @@ export default function FormPost({
                               type="submit"
                               disabled={formDisabled}
                             >
-                              Post reply
+                              Post Reply
                             </button>
 
                             {!status ? formPostOptions() : ""}

@@ -1,10 +1,9 @@
 import Footer from "components/Footer";
 import GenericHeader from "components/header/generic";
 import { Link } from "react-router-dom";
-import useWeb3 from "hooks/useWeb3";
+import { useWeb3, useUser } from "hooks";
 import { sendMessage } from "dchan";
 import WalletConnect from "components/wallet/WalletConnect";
-import useUser from "hooks/useUser";
 import { useEffect } from "react";
 
 export default function AdminPage() {
@@ -70,7 +69,7 @@ export default function AdminPage() {
           </div>
 
           <Link
-            className="m-4 text-blue-600 visited:text-purple-600 hover:text-blue-500"
+            className="m-4 dchan-link"
             to="/"
           >
             Home

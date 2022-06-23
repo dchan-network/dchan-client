@@ -35,7 +35,7 @@ export default function IndexView({
                                                     ? `?block=${block}`
                                                     : ""
                                                 }`}
-                                            className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+                                            className="dchan-link"
                                         >
                                             Reply
                                         </Link>
@@ -53,24 +53,24 @@ export default function IndexView({
                         >
                             <div className="text-left pl-8">
                                 {parseInt(thread.replyCount) >
-                                    1 + thread.replies.length ? (
+                                    1 + thread.replies?.length ? (
                                     <Link
                                         to={`${Router.thread(thread)}${block
                                                 ? `?block=${block}`
                                                 : ""
                                             }`}
-                                        className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+                                        className="dchan-link"
                                     >
                                         +{" "}
                                         {parseInt(thread.replyCount) -
-                                            thread.replies.length}{" "}
+                                            thread.replies?.length}{" "}
                                         replies omitted
                                     </Link>
                                 ) : (
                                     ""
                                 )}
                             </div>
-                            {[...thread.replies].reverse().map((post) => (
+                            {[...thread.replies || []].reverse().map((post) => (
                                 <Post
                                     post={post}
                                     thread={thread}

@@ -89,7 +89,7 @@ export default function HeaderNavigation({
       <div className="text-sm p-1 border-solid border-bottom-secondary-accent bg-primary border-0 border-b-2 text-left fixed top-0 left-0 right-0 shadow-md z-50">
         [
         <Link
-          className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+          className="dchan-link"
           to={`/${block ? `?block=${block}` : ""}`}
         >
           dchan.network
@@ -109,7 +109,7 @@ export default function HeaderNavigation({
           </span>
           [
           <Link
-            className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+            className="dchan-link"
             to={`${Router.boards()}${block ? `?block=${block}` : ""}`}
           >
             +

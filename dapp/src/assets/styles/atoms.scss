@@ -19,6 +19,10 @@
     color: var(--secondary);
 }
 
+.text-url {
+    color: var(--url);
+}
+
 .text-readable-anywhere {
     color: white;
     text-shadow:
@@ -78,6 +82,14 @@
 
 .border-bottom-tertiary {
     border-bottom: 1px solid var(--tertiary);
+}
+
+.border-bottom-tertiary-accent {
+    border-bottom: 1px solid var(--tertiary-accent);
+}
+
+.border-bottom-highlight {
+    border-bottom: 1px solid var(--highlight);
 }
 
 .border-secondary {

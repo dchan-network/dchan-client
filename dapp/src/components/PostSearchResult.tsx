@@ -5,7 +5,7 @@ import PostComponent from "./post/Post";
 
 export default function PostSearchResult({ post, block }: { post: Post, block?: string }) {
   return (
-    <div className="my-2">
+    <div className="my-2" data-theme={post?.board?.isNsfw ? "nsfw" : "blueboard"}>
       <PostComponent
         key={post.id}
         post={post}
@@ -21,7 +21,7 @@ export default function PostSearchResult({ post, block }: { post: Post, block?: 
               [
               <Link
                 to={`/${post.id}${block ? `?block=${block}` : ""}`}
-                className="text-blue-600 visited:text-purple-600 hover:text-blue-500 inline"
+                className="dchan-link inline"
               >
                 View
               </Link>

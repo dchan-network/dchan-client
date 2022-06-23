@@ -3,7 +3,7 @@ import { Block } from "dchan";
 import { fromBigInt } from "dchan/entities/datetime";
 import BLOCK_BY_DATE from "graphql/queries/block_by_date";
 import BLOCK_BY_NUMBER from "graphql/queries/block_by_number";
-import useLastBlock from "hooks/useLastBlock";
+import { useLastBlock } from "hooks";
 import { DateTime } from "luxon";
 import { useCallback, useEffect, useState, useMemo, forwardRef, ForwardedRef } from "react";
 import { useHistory } from "react-router-dom";
@@ -323,7 +323,7 @@ export default forwardRef(({
                 onReturnToPresent();
                 onClose();
               }}>
-                ⏱️
+                <div className="inline-block animation-spin spin-faster animation-direction-reverse">⌛</div> Time traveled to
               </span>
               {" "}
             </> : (
@@ -413,7 +413,7 @@ export default forwardRef(({
             </div>
             <div className="grid align-center text-xs w-full">
               <button
-                className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+                className="dchan-link"
                 onClick={onInputBlockNumber}
               >
                 {`Block #${timeTraveledToNumber || "?"}`}
@@ -423,7 +423,7 @@ export default forwardRef(({
                 <div className="text-xs text-center">
                   [
                   <button
-                    className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+                    className="dchan-link"
                     onClick={onReturnToPresent}
                   >
                     Return to present

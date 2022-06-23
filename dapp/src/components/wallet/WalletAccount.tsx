@@ -1,9 +1,9 @@
 import { getBalance, isMaticChainId } from "dchan";
 import { useEffect, useState } from "react";
-import UserLabel from "components/UserLabel"
+import UserLabel from "components/UserLabel";
+import Faucets from "components/Faucets";
 import polygonLogo from "assets/images/polygon.png";
-import useWeb3 from "hooks/useWeb3";
-import useUser from "hooks/useUser";
+import { useWeb3, useUser } from "hooks";
 
 export default function WalletAccount() {
   const { provider, accounts, chainId } = useWeb3();
@@ -52,38 +52,7 @@ export default function WalletAccount() {
                 <div>Need Matic?</div>
                 <div>
                   Free faucets:
-                  <ul>
-                    <li>
-                      <a
-                        href="https://faucet.dchan.network/"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-blue-600 visited:text-purple-600 hover:text-blue-500 px-2"
-                      >
-                        https://faucet.dchan.network
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="https://matic.supply/"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-blue-600 visited:text-purple-600 hover:text-blue-500 px-2"
-                      >
-                        https://matic.supply
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="https://macncheese.finance/matic-polygon-mainnet-faucet.php"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-blue-600 visited:text-purple-600 hover:text-blue-500 px-2"
-                      >
-                        https://macncheese.finance
-                      </a>
-                    </li>
-                  </ul>
+                  <Faucets />
                 </div>
               </div>
             ) : (

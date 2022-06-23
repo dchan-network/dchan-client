@@ -2,10 +2,30 @@ import { Link } from "react-router-dom";
 import { Board } from "dchan";
 import IdLabel from "components/IdLabel";
 import Loading from "components/Loading";
+import { usePubSub } from "hooks";
+import { useCallback } from "react";
 
-function BoardItem({ id, title, postCount, name, isLocked, isNsfw }: Board, block?: number) {
+function BoardItem({
+  board, 
+  block
+}: {
+  board: Board, 
+  block?: number
+}) {
+  const { id, title, postCount, name, isLocked, isNsfw } = board
+
+  const { publish } = usePubSub();
+
+  const onMouseEnter = useCallback(() => {
+    publish("BOARD_ITEM_HOVER_ENTER", board)
+  }, [board, publish])
+
+  const onMouseLeave = useCallback(() => {
+    publish("BOARD_ITEM_HOVER_LEAVE", board)
+  }, [board, publish])
+
   return (
-    <tr className="relative" key={id}>
+    <tr className="relative" key={id} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <td>
         <IdLabel
           id={id}
@@ -14,7 +34,7 @@ function BoardItem({ id, title, postCount, name, isLocked, isNsfw }: Board, bloc
       <td className="px-2 whitespace-nowrap hidden sm:block max-w-12rem truncate">
         <span>
           <Link
-            className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+            className="dchan-link"
             to={`/${name}/${id}${block ? `?block=${block}` : ""}`}
           >
             {title}
@@ -24,7 +44,7 @@ function BoardItem({ id, title, postCount, name, isLocked, isNsfw }: Board, bloc
       <td className="px-2 whitespace-nowrap">
         <span>
           <Link
-            className="text-blue-600 visited:text-purple-600 hover:text-blue-500 mx-4"
+            className="dchan-link mx-4"
             to={`/${name}/${id}${block ? `?block=${block}` : ""}`}
           >
             /{name}/
@@ -34,7 +54,7 @@ function BoardItem({ id, title, postCount, name, isLocked, isNsfw }: Board, bloc
       <td className="px-2 whitespace-nowrap text-right">
         <span>{postCount} posts</span>
       </td>
-      <td className="absolute left-full top-0 px-1 whitespace-nowrap center block">
+      <td className="left-full top-0 px-1 whitespace-nowrap center block">
         {isLocked ? (
           <span title="Board locked. You cannot post.">🔒</span>
         ) : (
@@ -63,12 +83,15 @@ export default function BoardList({
 }) {
   return (
     <div className={`${className} center`}>
-      <table className="mx-8 border-separate" style={{borderSpacing: "0 0.25rem"}}>
+      <table className="mx-8 border-separate">
         <tbody>
           {loading
             ? <Loading />
             : !boards ? "" : boards.length > 0
-              ? boards.map(board => BoardItem(board, block))
+              ? boards.map(board => BoardItem({
+                board, 
+                block
+              }))
               : "No boards"}
         </tbody>
       </table>

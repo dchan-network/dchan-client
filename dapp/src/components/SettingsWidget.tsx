@@ -1,6 +1,7 @@
-import useSettings, { Settings } from "hooks/useSettings";
+import { useSettings } from "hooks";
 import { useMemo, useState } from "react";
 import { debounce } from "lodash";
+import { Settings } from "hooks/useSettings";
 // import DefaultSettings from "settings/default";
 
 export default function SettingsWidget({onExit}: {onExit: () => void}) {

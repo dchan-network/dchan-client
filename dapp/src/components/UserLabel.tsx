@@ -4,7 +4,7 @@ import IdLabel from "./IdLabel";
 export default function UserLabel({ user, className = ""}: { className?: string, user: User }) {
   return (
     <a
-      className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+      className="dchan-link"
       // eslint-disable-next-line
       href={`https://polygonscan.com/address/${user.address}`}
       target={`_blank`}

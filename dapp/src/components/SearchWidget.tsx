@@ -55,7 +55,7 @@ export default function SearchWidget({
           <span className="text-xs">
             [
             <button
-              className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+              className="dchan-link"
               onClick={() => setSearch("")}
             >
               Cancel

@@ -3,7 +3,7 @@ import { parse as parseQueryString } from "query-string";
 import { isString } from "lodash";
 import { DateTime } from "luxon";
 import ContentHeader from "components/ContentHeader";
-import useSettings from "hooks/useSettings";
+import { useSettings } from "hooks";
 import { useQuery } from "@apollo/react-hooks";
 import { useEffect, useMemo } from "react";
 import { isLowScore, sortByCreatedAt } from "dchan/entities/post";
@@ -114,7 +114,7 @@ export default function PostSearchPage({ location, match: { params } }: any) {
                           [
                           <span className="p-1">
                             <Link
-                              className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+                              className="dchan-link"
                               to={`/${post.board?.name}/${post.board?.id}`}
                             >
                               /{post.board?.name}/
@@ -129,7 +129,7 @@ export default function PostSearchPage({ location, match: { params } }: any) {
                           [
                           <Link
                             to={`/${post.id}`}
-                            className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+                            className="dchan-link"
                           >
                             View
                           </Link>

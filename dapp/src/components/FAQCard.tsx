@@ -1,6 +1,7 @@
 import Card from "components/Card";
 import { useState } from "react";
 import { singletonHook } from "react-singleton-hook";
+import Faucets from "./Faucets";
 import OverlayComponent from "./OverlayComponent";
 
 export function TheGraph() {
@@ -50,14 +51,14 @@ export function FAQCard({onExit, className}: {onExit: () => void, className?: st
         <div className="pb-2">
           <strong>Q: What is this?</strong>
           <div>
-            This is dchan, a decentralized time-traveling imageboard.
+            This is dchan.network, a decentralized time-traveling imageboard.
           </div>
         </div>
 
         <div className="pb-2">
-          <strong>Q: Decentralized?</strong>
+          <strong>Q: ...Decentralized?</strong>
           <div>
-            dchan is a Web3 imageboard whose posts and images are
+            dchan.network is a Web3 imageboard whose posts and images are
             respectively stored on <Polygon />'s blockchain and on IPFS, using{" "}
             <TheGraph /> to index and serve the content in a decentralized
             manner.
@@ -65,38 +66,60 @@ export function FAQCard({onExit, className}: {onExit: () => void, className?: st
         </div>
 
         <div className="pb-2">
-          <strong>Q: Time-Traveling?</strong>
+          <strong>Q: ...Time-Traveling?</strong>
           <div>
-            dchan's backend was built using <TheGraph />, which is capable of obtaining data as it was at any point
+            dchan.network's backend was built using <TheGraph />, which is capable of obtaining data as it was at any point
             in time, allowing you to read
-            dchan's boards and threads exactly as they were, whenever in the
+            dchan.network's boards and threads exactly as they were, whenever in the
             past. This also means that there is no need for an archive, as
             it is already built in the protocol.
           </div>
         </div>
 
         <div className="pb-2">
-          <strong>Q: Imageboard?</strong>
+          <strong>Q: ...Imageboard?</strong>
           <div>
-            dchan is a simple image-based bulletin board where anyone can
+            dchan.network is a simple image-based bulletin board where anyone can
             post comments, share images and create boards. It is heavily
             inspired by 4chan.
           </div>
         </div>
 
         <div className="pb-2">
+          <strong>Q: Are posts anonymous?</strong>
+          <div>
+            No. Or rather, they are as anonymous as the address they're posted from. 
+            <br/>
+            Due to the public nature of the blockchain, posts are directly tied to whoever signed the post, meaning that <b>your post history is public, tied to your wallet address' identity and to any past activity</b>.
+            <br />
+            Please be mindful of that when posting.
+          </div>
+        </div>
+
+        <div className="pb-2">
+          <strong>Q: Oh crap oh no I posted something I shouldn't have, how can I delete it?</strong>
+          <div>
+            Too bad.
+            <br />
+            Once you post on the blockchain, it's forever.
+            <br />
+            You cannot delete it.
+            <br />
+            You cannot change it.
+            <br />
+            <b>The blockchain never forgets.</b>
+            <br />
+            Please be mindful of that when posting.
+          </div>
+        </div>
+        
+        <div className="pb-2">
           <strong>Q: Is it free?</strong>
           <div>
-            Yes! You will need a crypto wallet to post, but you don't need to buy cryptocurrency.
-            A tiny bit of free MATIC from{" "}
-            <a
-              className="text-blue-600 visited:text-purple-600"
-              href="https://faucet.dchan.network/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              the faucet
-            </a> will let you post a couple times. (<Polygon />'s gas fee is a minuscule &lt;$0.0001 per tx).
+            Kind of. You will need a crypto wallet to post and some <Polygon /> to pay the TX fee to post. A tiny bit of it should let you post a couple times, as <Polygon />'s gas fee should be cheap enough as long as the network works as intended.
+            <br />
+            You can get some free <Polygon /> at the following faucets:
+            <div><Faucets /></div>
           </div>
         </div>
 
@@ -105,63 +128,29 @@ export function FAQCard({onExit, className}: {onExit: () => void, className?: st
           <div>
             You'll need to install{" "}
             <a
-              className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+              className="dchan-link"
               href="//metamask.io"
             >
               Metamask
             </a>{" "}
             (if you're on Desktop) or{" "}
             <a
-              className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+              className="dchan-link"
               href="//trustwallet.com/"
             >
               Trust Wallet
             </a>{" "}
-            (if you're on Mobile). You'll need to connect your crypto wallet to interact with dchan.
+            (if you're on Mobile). Other wallets might not be supported. You'll need to connect your crypto wallet to post on dchan.network, but it's not required if you just want to lurk.
           </div>
         </div>
 
         <div className="pb-2">
-          <strong>Q: Do you sell tokens?</strong>
+          <strong>Q: Does dchan.network have a token? I need a useless shitcoin to lose all my life savings on.</strong>
           <div>
-            dchan does not require any token to function (except MATIC for
-            sending txs), so no tokens are sold. For now.
-          </div>
-        </div>
-
-        <div className="pb-2">
-          <strong>
-            Q: Why did you choose <Polygon /> instead of *chain*?
-          </strong>
-          <div>
-            As I'm writing this (Sep. 2021), <Polygon />'s L2 chain offers the best compromise between security, speed and price per
-            tx. Other solutions had a tradeoff that made them not viable
-          </div>
-        </div>
-
-        <div className="pb-2">
-          <strong>Q: Why did you do this?</strong>
-          <div>
-            Some anon pitched the idea to use <TheGraph /> to create a decentralized imageboard, and badabing badaboom here we are.
-          </div>
-        </div>
-
-        <div className="pb-2">
-          <strong>
-            Q: What is <TheGraph /> anyway?
-          </strong>
-          <div>
-            It's a decentralized network that allows you to read the
-            blockchain and expose its data however you need.{" "}
-            <a
-              className="text-blue-600 visited:text-purple-600"
-              href="//thegraph.com/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Go to their website
-            </a>{" "}
-            to learn more.
+            dchan.network does not require any token to function except <Polygon /> for
+            sending txs, so no. 
+            <br/>
+            This may change in the future.
           </div>
         </div>
 
@@ -213,7 +202,7 @@ export default function FAQButton({className = ""}: {className?: string}) {
   return (
     <>
       <span
-        className={`${className} cursor-pointer text-blue-600 visited:text-purple-600 hover:text-blue-500`}
+        className={`${className} cursor-pointer dchan-link`}
         onClick={(e) => {
           e.stopPropagation();
           e.preventDefault();

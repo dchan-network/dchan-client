@@ -15,6 +15,7 @@ Required:
 ## Start development
 - `./bin/docker_setup.sh` (only 1st time)
 - `./bin/docker_dev.sh`
+  - `./bin/yarn_start.sh`
 
 ## Serve production build
 - `./bin/docker_release.sh`

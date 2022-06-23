@@ -28,7 +28,7 @@ function TextQuote({
 function Reference({link, children}: {link: string; children: string | string[]}) {
   return (
     <Link
-      className="dchan-postref"
+      className="dchan-postref dchan-link"
       to={link}
     >
       <wbr/>
@@ -102,7 +102,7 @@ function PostReference({
 
   return (
     <Link
-      className="dchan-postref"
+      className="dchan-postref dchan-link"
       to={`${isCrossThread ? "/" : baseUrl}${postLink}${block ? `?block=${block}` : ""}`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -139,7 +139,7 @@ function Spoiler({
 function ExternalLink({link}: {link: string}) {
   return (
     <a
-      className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+      className="dchan-link"
       href={link}
       target="_blank"
       rel="noreferrer"
@@ -154,7 +154,7 @@ function IPFSImage({hash}: {hash: string}) {
     <details className="inline w-full">
       <summary>
         <a
-          className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+          className="dchan-link"
           href={`//ipfs.io/ipfs/${hash}`}
           target="_blank"
           rel="noreferrer"
@@ -195,7 +195,7 @@ function PostBody({
   thread,
   block,
   style = {},
-  className
+  className = ""
 }: {
   style?: any;
   className?: string;

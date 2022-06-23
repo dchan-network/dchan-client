@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/react-hooks";
 import CHAN_STATUS from "graphql/queries/chan_status";
 import poopieSrc from "assets/images/poopie.png";
 import Card from "./Card";
-import useSettings from "hooks/useSettings";
+import { useSettings } from "hooks";
 interface ChanStatusData {
   chanStatus: {
     isLocked: boolean;

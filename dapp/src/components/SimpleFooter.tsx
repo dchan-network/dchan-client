@@ -9,7 +9,7 @@ export default function SimpleFooter() {
       </div>
       <div>
         <Link
-          className="block text-blue-600 visited:text-purple-600 hover:text-blue-500"
+          className="block dchan-link"
           to="/"
         >
           Home

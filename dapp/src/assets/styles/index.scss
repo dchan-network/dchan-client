@@ -20,4 +20,10 @@ body {
     overflow-x: hidden;
     scrollbar-width: thin;
     font-family: arial,helvetica,sans-serif;
+}  
+select {
+    padding: 0.25rem;
+    margin: 0.25rem;
+    border: solid 1px gray;
+    border-radius: 0.25rem;
 }

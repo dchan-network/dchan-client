@@ -16,7 +16,7 @@ export default function Card({
       <header className="bg-highlight py-1 bg-white border border-black">
         <div className="text-xl text-center font-semibold">{title}</div>
       </header>
-      <section className={`${bodyClassName} bg-white border border-black border-t-0 w-full p-4`} style={{flex: "1 1 auto"}}>
+      <section className={`${bodyClassName} bg-white border border-black border-t-0 w-full p-1`} style={{flex: "1 1 auto"}}>
         {children}
       </section>
     </article>

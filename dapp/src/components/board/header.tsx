@@ -7,8 +7,7 @@ import IdLabel from "components/IdLabel";
 import Menu from "components/Menu";
 import { useState } from "react";
 import { lockBoard, removeBoard, unlockBoard } from "dchan/operations";
-import useUser from "hooks/useUser";
-import useWeb3 from "hooks/useWeb3";
+import { useUser, useWeb3 } from "hooks";
 import { DateTime } from "luxon";
 
 export default function BoardHeader({

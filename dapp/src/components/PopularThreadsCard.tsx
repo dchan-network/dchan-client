@@ -1,14 +1,14 @@
 import { useQuery } from "@apollo/react-hooks";
-import { Thread } from "dchan";
+import { Board, Thread } from "dchan";
 import THREADS_LIST_MOST_POPULAR from "graphql/queries/threads/list_most_popular";
 import THREADS_LIST_MOST_POPULAR_BLOCK from "graphql/queries/threads/list_most_popular_block";
-import CatalogView from "./CatalogView";
+import IndexView from "./IndexView";
 import Loading from "./Loading";
 import { useTraveledBlock } from "./TimeTravelWidget";
 import { DateTime } from "luxon";
 import { useMemo } from "react";
 
-export default function PopularThreadsCard({block} : {block?: number}) {
+export default function PopularThreadsCard({block, board} : {block?: number, board?: Board}) {
   const currentBlock = useTraveledBlock();
   const cutoff = useMemo(
     () => Math.floor(
@@ -24,10 +24,11 @@ export default function PopularThreadsCard({block} : {block?: number}) {
     variables: {
       cutoff,
       block: currentBlock ? parseInt(currentBlock.number) : block,
+      board: board?.id || ""
     },
   });
 
   return loading
     ? <Loading />
-    : <CatalogView threads={data?.threads || []} showBoard={true} block={block} />;
+    : data?.threads.length ? <IndexView threads={data.threads} showBoard={true} block={block} /> : <span>No threads active.</span>;
 }

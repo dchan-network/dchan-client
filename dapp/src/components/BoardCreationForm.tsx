@@ -1,5 +1,5 @@
 import { createBoard } from "dchan/operations";
-import useWeb3 from "hooks/useWeb3";
+import { useWeb3 } from "hooks";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";

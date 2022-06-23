@@ -34,7 +34,7 @@ export async function switchChain() {
       method: 'wallet_switchEthereumChain',
       params: [{ chainId: MATIC_CHAIN }],
     });
-  } catch (switchError) {
+  } catch (switchError: any) {
     // Rescue
     if (ERRORS_CHAIN_NOT_FOUND.includes(switchError.code)) {
       addChain()

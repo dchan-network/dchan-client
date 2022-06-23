@@ -9,9 +9,9 @@ export function AbuseCard() {
     title={<div className="">Abuse (DMCA/CSAM)</div>}
   >
   <div className="text-left p-4">
-    This is a decentralized application: the content shown here is not hosted on this website's servers, but is instead retrieved via <a className="text-blue-600 visited:text-purple-600 hover:text-blue-500" href="https://ipfs.io/" rel="nofollow">IPFS</a>.
+    This is a decentralized application: the content shown here is not hosted on this website's servers, but is instead retrieved via <a className="dchan-link" href="https://ipfs.io/" rel="nofollow">IPFS</a>.
     <br />
-    Please refer to the IPFS Gateway Service's <a className="text-blue-600 visited:text-purple-600 hover:text-blue-500" href="https://ipfs.io/legal/" rel="nofollow">legal page</a> to report any offending content.
+    Please refer to the IPFS Gateway Service's <a className="dchan-link" href="https://ipfs.io/legal/" rel="nofollow">legal page</a> to report any offending content.
   </div></Card>
   );
 }
@@ -36,7 +36,7 @@ export default function AbuseButton({className = ""}: {className?: string}) {
   return (
     <>
       <span
-        className={`${className} cursor-pointer text-blue-600 visited:text-purple-600 hover:text-blue-500`}
+        className={`${className} cursor-pointer dchan-link`}
         onClick={(e) => {
           e.stopPropagation();
           e.preventDefault();

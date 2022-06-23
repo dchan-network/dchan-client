@@ -16,10 +16,11 @@ export type UseWeb3 = {
 
 const useWeb3 = singletonHook({
   provider: undefined,
-  chainId: undefined, accounts: [],
+  chainId: undefined,
+  accounts: [],
   loadWeb3Modal: async () => { },
   logoutOfWeb3Modal: async () => { }
-}, () => {
+} as any, () => {
   const [provider, setProvider] = useState<Web3Provider>();
   const [chainId, setChainId] = useState<string | number>();
   const [accounts, setAccounts] = useState<string[]>([]);
@@ -63,8 +64,9 @@ const useWeb3 = singletonHook({
       window.ethereum.on('chainChanged', (chainId: string) => {
         setChainId(chainId)
       });
+      return { success: true }
     } catch (error) {
-      console.error({ error })
+      return { success: false }
     }
   }, [web3Modal]);
 

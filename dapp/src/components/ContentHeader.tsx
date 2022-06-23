@@ -1,6 +1,6 @@
 import { useThrottleCallback } from "@react-hook/throttle";
 import { Board, Thread } from "dchan";
-import useLastBlock from "hooks/useLastBlock";
+import { useLastBlock } from "hooks";
 import { DateTime } from "luxon";
 import { ReactElement } from "react";
 import { Router } from "router";
@@ -66,7 +66,7 @@ export default function ContentHeader({
         <hr></hr>
       </div>
 
-      <div className="text-center sm:text-left grid md:grid-cols-3">
+      <div className="text-center sm:text-left grid xl:grid-cols-3 text-xs">
         <div className="mx-2 flex flex-wrap sm:flex-nowrap justify-center md:justify-start items-center">
           <span className="whitespace-nowrap sm:flex">
             {!!board ? (
@@ -74,7 +74,7 @@ export default function ContentHeader({
                 <span>
                   [
                   <Link
-                    className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+                    className="dchan-link"
                     to={`${Router.board(board)}/index${timeTravelURL}`}
                   >
                     Index
@@ -84,7 +84,7 @@ export default function ContentHeader({
                 <span>
                   [
                   <Link
-                    className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+                    className="dchan-link"
                     to={`${Router.board(board)}/catalog${timeTravelURL}`}
                   >
                     Catalog
@@ -107,7 +107,7 @@ export default function ContentHeader({
         <div className="center grid">
           <span className="py-2 text-xs text-gray-600">{summary}</span>
         </div>
-        <div className="flex justify-end">{!thread ? <BoardViewSettings /> : ""}</div>
+        <div className="flex flex-wrap justify-center md:justify-end items-center">{!thread ? <BoardViewSettings /> : ""}</div>
       </div>
 
       <div className="p-2">

@@ -21,7 +21,8 @@ import { AbuseCardOverlay } from "components/AbuseCard";
 import DefaultSettings from "settings/default";
 
 import { useState } from "react";
-import useSettings, { Settings, writeAppSetSettings } from "hooks/useSettings";
+import { useSettings } from "hooks";
+import { Settings, writeAppSetSettings } from "hooks/useSettings";
 
 // So there's an issue with how settings works
 //

@@ -4,8 +4,8 @@ import POST_FRAGMENT from "graphql/fragments/post";
 const POSTS_GET_LAST_BLOCK = gql`
   ${POST_FRAGMENT}
 
-  query PostsGetLast($block: Int!) {
-    posts(orderBy: createdAt, orderDirection: desc, first: 50, where: {sage: false}, block: {number: $block}) {
+  query PostsGetLast($block: Int!, $board: String!) {
+    posts(orderBy: createdAt, orderDirection: desc, first: 50, where: {sage: false, board_starts_with: $board, board_ends_with: $board}, block: {number: $block}) {
       ...Post
     }
   }

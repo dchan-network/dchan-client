@@ -1,4 +1,4 @@
-import useSettings from "hooks/useSettings";
+import { useSettings } from "hooks";
 import { DateTime } from "luxon";
 import { useCallback, useState } from "react";
 import { useEffect } from "react";
@@ -49,33 +49,13 @@ export function RefreshWidget({ onRefresh }: { onRefresh: () => void }) {
             <span>
               [
               <button
-                className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+                className="dchan-link"
                 onClick={refresh}
               >
                 {lastRefreshedRelative || "Refreshing..."}
               </button>
               ]
             </span>
-            <div className="text-xs">
-              <input
-                id="dchan-input-refresh-toggle1"
-                className="mx-1 text-xs whitespace-nowrap"
-                type="checkbox"
-                checked={settings?.autorefresh?.enabled}
-                onChange={(e) => {
-                  setSettings({
-                    ...settings,
-                    autorefresh: {
-                      ...settings?.autorefresh,
-                      enabled: e.target.checked,
-                    },
-                  });
-                }}
-              />
-              <label htmlFor="dchan-input-refresh-toggle1">
-                Refresh every {settings?.autorefresh?.seconds}s
-              </label>
-            </div>
           </summary>
           <div className="bg-secondary p-2">
             <div>

@@ -31,7 +31,7 @@ export default function IPFSClientWidget() {
               stable.publishedAtBlock.timestamp
             ).toLocaleString(DateTime.DATETIME_SHORT)}`}</span>
             <a
-              className="text-blue-600 visited:text-purple-600 hover:text-blue-500 border border-black px-2 mx-1 bg-white"
+              className="dchan-link border border-black px-2 mx-1 bg-white"
               href={`//ipfs.io/ipfs/${stable.ipfsHash}`}
               target="_blank"
               rel="noreferrer"
@@ -49,7 +49,7 @@ export default function IPFSClientWidget() {
               dev.publishedAtBlock.timestamp
             ).toLocaleString(DateTime.DATETIME_SHORT)}`}</span>
             <a
-              className="text-blue-600 visited:text-purple-600 hover:text-blue-500 border border-black px-2 mx-1 bg-white"
+              className="dchan-link border border-black px-2 mx-1 bg-white"
               href={`//ipfs.io/ipfs/${dev.ipfsHash}`}
               target="_blank"
               rel="noreferrer"

@@ -58,6 +58,23 @@
 }
 
 .dchan-postref {
-    color: #dd0000;
     text-decoration: underline;
+}
+
+.dchan-link {
+    cursor: pointer;
+    color: var(--url);
+
+    &:hover {
+        color: red;
+    }
+}
+
+.dchan-menu {
+    position: relative;
+
+    & > div {
+        top: -0rem;
+        left: 1rem;
+    }
 }

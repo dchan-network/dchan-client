@@ -14,7 +14,7 @@ export default function Anchor({
     <div>
       [
       <HashLink
-        className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+        className="dchan-link"
         to={`${search}${to}`}
       >
         {label}

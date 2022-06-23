@@ -2,8 +2,8 @@ import { Thread } from "dchan";
 import IPFSImage from "components/IPFSImage";
 import PostBody from "components/post/PostBody";
 import { isLowScore as isLowScoreThread } from "dchan/entities/thread";
-import useSettings from "hooks/useSettings";
-import { Link, useHistory } from "react-router-dom";
+import { useSettings } from "hooks";
+import { useHistory } from "react-router-dom";
 import { Router } from "router";
 import { DateTime } from "luxon";
 import { useState, useCallback } from "react";
@@ -150,11 +150,11 @@ const CatalogThread = ({
                 ""
               )}
               <div>
-                R:<strong>{replyCount}</strong>, I:<strong>{imageCount}</strong>
+                <abbr title="Replies">R</abbr>: <strong>{replyCount}</strong>, <abbr title="Images">I</abbr>: <strong>{imageCount}</strong>
               </div>
               <div className="word-wrap">
                 <div>
-                  <strong>{subject}</strong>
+                  <strong className="text-url">{subject}</strong>
                 </div>
                 <PostBody
                   style={{
@@ -175,14 +175,7 @@ const CatalogThread = ({
                           parseInt(post.createdAtBlock.timestamp)
                         ).toRelative()}
                       </div>
-                      <Link
-                        className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
-                        to={`${Router.post(post) || ""}${
-                          block ? `?block=${block}` : ""
-                        }`}
-                      >
-                        <PostBody post={post} />
-                      </Link>
+                      <PostBody post={post} />
                     </div>
                   ))}
               </div>

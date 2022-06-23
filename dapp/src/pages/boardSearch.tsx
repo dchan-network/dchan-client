@@ -24,7 +24,7 @@ export default function BoardListPage({
       <GenericHeader title="Boards" block={query.block ? `${query.block}` : undefined} />
 
       <Link
-        className="text-blue-600 visited:text-purple-600 hover:text-blue-500 py-1 px-4"
+        className="dchan-link py-1 px-4"
         to="/_/boards"
       >
         All boards

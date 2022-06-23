@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/react-hooks";
 import THREADS_LIST_FAVORITES from "graphql/queries/threads/list_favorites";
 import THREADS_LIST_FAVORITES_BLOCK from "graphql/queries/threads/list_favorites_block";
-import useFavorites from "hooks/useFavorites";
+import { useFavorites } from "hooks";
 import { useMemo } from "react";
 import CatalogView from "./CatalogView";
 import Loading from "./Loading";

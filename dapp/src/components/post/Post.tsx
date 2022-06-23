@@ -1,16 +1,15 @@
 import IPFSImage from "components/IPFSImage";
 import { Post as DchanPost, Thread } from "dchan";
 import { isLowScore } from "dchan/entities/post";
-import usePubSub from "hooks/usePubSub";
-import useSettings from "hooks/useSettings";
+import { usePubSub, useSettings, useUser } from "hooks";
 import { truncate } from "lodash";
 import { useCallback } from "react";
 import { ReactElement, useEffect, useRef, useState, memo } from "react";
 import PostBody from "./PostBody";
 import PostHeader from "./PostHeader";
 import { isEqual } from "lodash";
-import useUser from "hooks/useUser";
 import { Link } from "react-router-dom";
+import Menu from "components/Menu";
 
 function Post({
   children,
@@ -19,7 +18,7 @@ function Post({
   header,
   block,
   enableBacklinks = false,
-  showNsfw = false
+  showNsfw = false,
 }: {
   children?: any;
   post: DchanPost;
@@ -110,6 +109,7 @@ function Post({
   });
 
   const ipfsUrl = !!image ? `https://ipfs.io/ipfs/${image.ipfsHash}` : "";
+  const ipfsUrlURIComponent = encodeURIComponent(ipfsUrl)
   const isOp = id === thread?.id;
   const isYou = userData?.user?.id === post.from.id 
   const [settings] = useSettings();
@@ -133,7 +133,7 @@ function Post({
     <div className="flex relative">
       {!isOp ? <span className="hidden md:block pl-2 text-secondary">&gt;&gt;</span> : ""}
       <div
-        className="mx-auto md:mr-3 md:ml-2 text-left inline"
+        className={`mx-auto md:mr-3 md:ml-2 text-left inline ${isOp ? "overflow-auto w-full" : ""}`}
         key={id}
         ref={postRef}
       >
@@ -185,13 +185,13 @@ function Post({
             ) : (
               <div>
                 {!!image ? (
-                  <div className="text-center sm:text-left mx-5 truncate">
+                  <div className="text-center sm:text-left mx-5">
                     <span className="text-sm">
                       <span className="flex flex-wrap">
                         <a
                           target="_blank"
                           rel="noreferrer"
-                          className="text-blue-600 max-w-64"
+                          className="dchan-link underline max-w-64"
                           href={ipfsUrl}
                           title={image.name}
                         >
@@ -206,12 +206,23 @@ function Post({
                         <a
                           target="_blank"
                           rel="noreferrer"
-                          className="px-1 opacity-20 hover:opacity-100  hidden sm:inline-block"
+                          className="px-1 opacity-20 hover:opacity-100 hidden sm:inline-block"
                           href={ipfsUrl}
                           title={image.name}
                         >
                           <small>{image.ipfsHash}</small>
                         </a>
+                        <Menu>
+                          <div>
+                            Reverse search:
+                            <div>
+                              <div><a target="_blank" rel="noreferrer" className="dchan-link pr-1" href={`https://www.google.com/searchbyimage?image_url=${ipfsUrlURIComponent}amp;safe=off`}>google</a></div>
+                              <div><a target="_blank" rel="noreferrer" className="dchan-link pr-1" href={`https://yandex.com/images/search?rpt=imageview&amp;url=${ipfsUrlURIComponent}`}>yandex</a></div>
+                              <div><a target="_blank" rel="noreferrer" className="dchan-link pr-1" href={`//iqdb.org/?url=${ipfsUrlURIComponent}`}>iqdb</a></div>
+                              <div><a target="_blank" rel="noreferrer" className="dchan-link pr-1" href={`https://trace.moe/?auto&amp;url=${ipfsUrlURIComponent}`}>wait</a></div>
+                            </div>
+                          </div>
+                        </Menu>
                       </span>
                     </span>
                   </div>
@@ -221,7 +232,7 @@ function Post({
                 <div className="y-1">
                   <div
                     className={`h-full max-w-max flex flex-wrap text-left sm:items-start pb-1 ${
-                      isOp ? `max-w-100vw` : "max-w-90vw"
+                      isOp ? `max-w-100vw` : "max-w-90vw border-bottom-tertiary-accent"
                     }`}
                   >
                     <span className="w-full">
@@ -249,7 +260,7 @@ function Post({
                         )}
                       </div>
                       <PostBody
-                        className="md:ml-10 ml-5 mr-5 py-2 mb-2"
+                        className="md:ml-10 ml-5 mr-5 py-2"
                         post={post}
                         thread={thread}
                         block={block}
@@ -266,7 +277,7 @@ function Post({
                   </div>
                   {children}
                   <Link
-                    className="px-1 text-xs opacity-10 hover:opacity-100 absolute bottom-0 right-0 hidden sm:inline"
+                    className="px-1 text-xs opacity-5 hover:opacity-100 absolute bottom-0 right-0 hidden sm:inline"
                     to={`/${post.id}${block ? `?block=${block}` : ""}`} title="Permalink">
                     <small>{post.id}</small>
                   </Link>

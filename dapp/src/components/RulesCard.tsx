@@ -39,7 +39,7 @@ export default function RulesButton({className = ""}: {className?: string}) {
   return (
     <>
       <span
-        className={`${className} cursor-pointer text-blue-600 visited:text-purple-600 hover:text-blue-500`}
+        className={`${className} cursor-pointer dchan-link`}
         onClick={(e) => {
           e.stopPropagation();
           e.preventDefault();

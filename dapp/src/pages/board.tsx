@@ -1,12 +1,12 @@
 import Footer from "components/Footer";
-import useLastBlock from "hooks/useLastBlock";
+import { useLastBlock, useSettings } from "hooks";
 import { parse as parseQueryString } from "query-string";
 import { DateTime } from "luxon";
 import { Board, BoardRef, Thread } from "dchan";
 import { useEffect, useMemo } from "react";
 import { Router } from "router";
 import BOARD_CATALOG from "graphql/queries/board_catalog";
-import useSettings from "hooks/useSettings";
+import BOARD_GET from "graphql/queries/boards/get";
 import { useQuery } from "@apollo/react-hooks";
 import { isLowScore } from "dchan/entities/thread";
 import ContentHeader from "components/ContentHeader";
@@ -16,7 +16,6 @@ import CatalogView from "components/CatalogView";
 import IndexView from "components/IndexView";
 import { Link, useHistory } from "react-router-dom";
 import { useTitle } from "react-use";
-import BOARD_GET from "graphql/queries/boards/get";
 
 interface BoardCatalogData {
   board: Board;
@@ -135,7 +134,7 @@ export default function BoardPage({ location, match: { params } }: any) {
   );
 
   return (
-    <div className="bg-primary min-h-100vh flex flex-col">
+    <div className="bg-primary min-h-100vh flex flex-col" data-theme={board?.isNsfw ? "nsfw" : "blueboard"}>
       <div>
         <ContentHeader
           board={board}
@@ -161,7 +160,7 @@ export default function BoardPage({ location, match: { params } }: any) {
               Board does not exist.
               {!isNaN(queriedBlock) ? <>
                 <br/>
-                You may have time traveled to before it was created.
+                You may have time traveled to before it was created, or after it was deleted.
               </> : ""}
             </div>
           ) : catalogLoading && !catalogData ? (
@@ -204,7 +203,7 @@ export default function BoardPage({ location, match: { params } }: any) {
                 <span>
                   {page > 1 ? (
                     <Link
-                      className="text-blue-600 visited:text-purple-600 hover:text-blue-500 px-2"
+                      className="dchan-link px-2"
                       to={`${Router.board(board, boardMode)}?page=1${
                         queriedBlock ? `&block=${queriedBlock}` : ""
                       }`}
@@ -218,7 +217,7 @@ export default function BoardPage({ location, match: { params } }: any) {
                 <span>
                   {page > 1 ? (
                     <Link
-                      className="text-blue-600 visited:text-purple-600 hover:text-blue-500 px-2"
+                      className="dchan-link px-2"
                       to={`${Router.board(board, boardMode)}?page=${page - 1}${
                         queriedBlock ? `&block=${queriedBlock}` : ""
                       }`}
@@ -232,7 +231,7 @@ export default function BoardPage({ location, match: { params } }: any) {
                 <span>
                   [
                   <button
-                    className="text-blue-600 visited:text-purple-600 hover:text-blue-500 px-2"
+                    className="dchan-link px-2"
                     onClick={() => {
                       const input = prompt(
                         `Page number: (range: 1-${maxPage})`
@@ -256,7 +255,7 @@ export default function BoardPage({ location, match: { params } }: any) {
                 <span>
                   {page < maxPage ? (
                     <Link
-                      className="text-blue-600 visited:text-purple-600 hover:text-blue-500 px-2"
+                      className="dchan-link px-2"
                       to={`${Router.board(board, boardMode)}?page=${page + 1}${
                         queriedBlock ? `&block=${queriedBlock}` : ""
                       }`}
@@ -270,7 +269,7 @@ export default function BoardPage({ location, match: { params } }: any) {
                 <span>
                   {page < maxPage ? (
                     <Link
-                      className="text-blue-600 visited:text-purple-600 hover:text-blue-500 px-2"
+                      className="dchan-link px-2"
                       to={`${Router.board(board, boardMode)}?page=${maxPage}${
                         queriedBlock ? `&block=${queriedBlock}` : ""
                       }`}

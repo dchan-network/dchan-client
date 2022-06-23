@@ -1,7 +1,7 @@
 import StillStuck from "components/StillStuck";
 import { isMaticChainId } from "dchan";
 import { switchChain } from "dchan/chain";
-import useWeb3 from "hooks/useWeb3";
+import { useWeb3 } from "hooks";
 import { useCallback } from "react";
 import { useState } from "react";
 import polygonLogo from "assets/images/polygon.png";
@@ -28,7 +28,7 @@ export default function WalletSwitchChain() {
       <div>
         [
         <button
-          className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+          className="dchan-link"
           onClick={onSwitchChain}
         >
           Switch chain
@@ -45,7 +45,7 @@ export default function WalletSwitchChain() {
               target="_blank"
               rel="noreferrer"
               href="https://www.google.com/search?q=how+to+add+polygon+chain"
-              className="text-blue-600 visited:text-purple-600 hover:text-blue-500"
+              className="dchan-link"
             >
               this guide
             </a>.</div></StillStuck>
